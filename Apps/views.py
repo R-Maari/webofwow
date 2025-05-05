@@ -59,10 +59,17 @@ def dashboard(request):
 
 from pymongo import MongoClient
 
+<<<<<<< HEAD
+client = MongoClient("mongodb+srv://rmariatai57:rstkm684@cluster0.upaqeve.mongodb.net/")
+db = client['webofwonders']  
+user_collection = db['user'] 
+otp_collection = db['OTP']   
+=======
 # client = MongoClient("mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/")
 # db = client['webofwonders']  
 # user_collection = db['user'] 
 # otp_collection = db['OTP']   
+>>>>>>> fb948636dd8e8184172174f953190ed0135621f2
 
 
 
@@ -246,6 +253,7 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
+        client = MongoClient("mongodb+srv://rmariatai57:rstkm684@cluster0.upaqeve.mongodb.net/")
         # client = MongoClient("mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/")
 
         client = MongoClient('localhost', 27017)

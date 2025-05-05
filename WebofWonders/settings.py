@@ -87,13 +87,22 @@ WSGI_APPLICATION = 'WebofWonders.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
+        'NAME': 'webofwonders', 
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {  
+            'host': 'mongodb+srv://rmariatai57:rstkm684@cluster0.upaqeve.mongodb.net/', 
+            'username': 'rmariatai57',
+            'password': 'rstkm684',  
+            'authSource': 'admin',
+        }
+    }
         'NAME': 'webofwonders',  # Your MongoDB database name
         'CLIENT': {
             'host': 'localhost',
             'port': 27017,
         },
     },
-}
+
 
 # DATABASES = {
 #     'default': {
