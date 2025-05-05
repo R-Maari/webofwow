@@ -59,21 +59,21 @@ def dashboard(request):
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/")
-db = client['webofwonders']  
-user_collection = db['user'] 
-otp_collection = db['OTP']   
-
-
-
-
-
-
-
-# client = MongoClient('localhost', 27017) 
-# db = client['webofwonders']
-# user_collection = db['User']  
+# client = MongoClient("mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/")
+# db = client['webofwonders']  
+# user_collection = db['user'] 
 # otp_collection = db['OTP']   
+
+
+
+
+
+
+
+client = MongoClient('localhost', 27017) 
+db = client['webofwonders']
+user_collection = db['User']  
+otp_collection = db['OTP']   
 
 otp_storage = {}  
 
@@ -246,9 +246,9 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        client = MongoClient("mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/")
+        # client = MongoClient("mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/")
 
-        # client = MongoClient('localhost', 27017)
+        client = MongoClient('localhost', 27017)
         db = client['webofwonders']
         user_collection = db['User']
 
