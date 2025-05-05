@@ -95,13 +95,14 @@ DATABASES = {
             'password': 'rstkm684',  
             'authSource': 'admin',
         }
-    }
+    
         'NAME': 'webofwonders',  # Your MongoDB database name
         'CLIENT': {
             'host': 'localhost',
             'port': 27017,
         },
     },
+}
 
 
 # DATABASES = {
