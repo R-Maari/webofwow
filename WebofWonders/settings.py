@@ -94,7 +94,7 @@ DATABASES = {
             'username': 'rmariatai57',
             'password': 'rstkm684',  
             'authSource': 'admin',
-        }
+        },
     
         'NAME': 'webofwonders',  # Your MongoDB database name
         'CLIENT': {
