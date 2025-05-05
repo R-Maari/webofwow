@@ -84,6 +84,16 @@ WSGI_APPLICATION = 'WebofWonders.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'webofwonders',  # Your MongoDB database name
+#         'CLIENT': {
+#             'host': 'localhost',
+#             'port': 27017,
+#         },
+#     },
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -94,30 +104,9 @@ DATABASES = {
             'username': 'rmariatai57',
             'password': 'rstkm684',  
             'authSource': 'admin',
-        },
-    
-        'NAME': 'webofwonders',  # Your MongoDB database name
-        'CLIENT': {
-            'host': 'localhost',
-            'port': 27017,
-        },
-    },
+        }
+    }
 }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'webofwonders', 
-#         'ENFORCE_SCHEMA': True,
-#         'CLIENT': {  
-#             'host': 'mongodb+srv://rmariatai57:rstkm684@cluster0.upaqeve.mongodb.net/', 
-#             'username': 'rmariatai57',
-#             'password': 'rstkm684',  
-#             'authSource': 'admin',
-#         }
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
