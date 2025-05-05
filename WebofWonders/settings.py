@@ -99,10 +99,10 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'webofwonders', 
         'ENFORCE_SCHEMA': True,
-        'CLIENT': {
-            'host': 'mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/', 
+        'CLIENT': {  
+            'host': 'mongodb+srv://rmariatai57:rstkm684@cluster0.upaqeve.mongodb.net/', 
             'username': 'rmariatai57',
-            'password': 'CEowYbCGnISoDCFw',  
+            'password': 'rstkm684',  
             'authSource': 'admin',
         }
     }
