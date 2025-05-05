@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+</head>
+<body>
+    <h1>AI Image Prompt Generator</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="prompt" placeholder="Enter a prompt..." required>
+        <button type="submit">Generate Image</button>
+    </form>
+
+    {% if image_url %}
+        <h2>Generated Image:</h2>
+        <img src="{{ image_url }}" alt="Generated Image" style="max-width: 100%;">
+    {% endif %}
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>

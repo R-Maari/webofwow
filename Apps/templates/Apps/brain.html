@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Reaction Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #reaction-button {
+            display: none;
+            margin: 20px;
+            padding: 20px;
+            font-size: 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        #start-button {
+            margin: 20px;
+            padding: 20px;
+            font-size: 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Brain Reaction Game</h1>
+    <button id="start-button" onclick="startGame()">Start Game</button>
+    <button id="reaction-button" onclick="recordReaction()">Click Me!</button>
+    <div id="result" class="hidden"></div>
+
+    <script>
+        let startButton = document.getElementById("start-button");
+        let reactionButton = document.getElementById("reaction-button");
+        let resultDiv = document.getElementById("result");
+
+        let startTime;
+        let reactionTime;
+
+        function startGame() {
+            resultDiv.classList.add("hidden");
+            startButton.disabled = true;
+            reactionButton.style.display = "none";
+
+            // Wait for a random time before showing the button
+            let randomDelay = Math.floor(Math.random() * 5000) + 2000;  // between 2 and 7 seconds
+            setTimeout(function() {
+                startTime = new Date().getTime();
+                reactionButton.style.display = "inline-block";
+            }, randomDelay);
+        }
+
+        function recordReaction() {
+            let endTime = new Date().getTime();
+            reactionTime = endTime - startTime;
+            resultDiv.innerHTML = "Your reaction time is: " + reactionTime + " milliseconds.";
+            resultDiv.classList.remove("hidden");
+
+            // Restart the game
+            startButton.disabled = false;
+            reactionButton.style.display = "none";
+        }
+    </script>
+</body>
+</html>

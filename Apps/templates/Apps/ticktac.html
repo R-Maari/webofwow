@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #game {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+            justify-content: center;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            border: 2px solid #333;
+            cursor: pointer;
+        }
+        .cell.taken {
+            pointer-events: none;
+            background-color: #ddd;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <div id="game"></div>
+    <div id="result"></div>
+    <button onclick="restartGame()">Restart Game</button>
+    <script>
+        const gameBoard = document.getElementById('game');
+        const result = document.getElementById('result');
+        let board = Array(9).fill(null);
+        let currentPlayer = 'X';
+        let gameActive = true;
+
+        // Initialize the game board
+        function createBoard() {
+            gameBoard.innerHTML = '';
+            board.forEach((cell, index) => {
+                const cellElement = document.createElement('div');
+                cellElement.classList.add('cell');
+                cellElement.dataset.index = index;
+                cellElement.addEventListener('click', handleCellClick);
+                cellElement.textContent = cell;
+                gameBoard.appendChild(cellElement);
+            });
+        }
+
+        // Handle cell click
+        function handleCellClick(event) {
+            const index = event.target.dataset.index;
+            if (board[index] || !gameActive) return;
+
+            board[index] = currentPlayer;
+            event.target.textContent = currentPlayer;
+            event.target.classList.add('taken');
+
+            if (checkWinner()) {
+                result.textContent = `${currentPlayer} wins!`;
+                gameActive = false;
+                return;
+            }
+
+            if (board.every(cell => cell)) {
+                result.textContent = "It's a tie!";
+                gameActive = false;
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+
+        // Check for a winner
+        function checkWinner() {
+            const winningCombinations = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6],
+            ];
+
+            return winningCombinations.some(combination => {
+                const [a, b, c] = combination;
+                return board[a] && board[a] === board[b] && board[a] === board[c];
+            });
+        }
+
+        // Restart the game
+        function restartGame() {
+            board = Array(9).fill(null);
+            currentPlayer = 'X';
+            gameActive = true;
+            result.textContent = '';
+            createBoard();
+        }
+
+        // Start the game
+        createBoard();
+    </script>
+</body>
+</html>

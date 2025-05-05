@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .sample-text {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Typing Speed Test</h1>
+    
+    <p class="sample-text">{{ sample_text }}</p>
+
+    <form id="typingForm" method="POST" action="{% url 'typing_test_results' %}">
+        {% csrf_token %}
+        <input type="hidden" name="original_text" value="{{ sample_text }}">
+        <input type="hidden" id="time_taken" name="time_taken" value="60">
+
+        <textarea name="typed_text" id="typed_text" placeholder="Start typing here..."></textarea><br>
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        let startTime = Date.now();
+
+        function submitForm() {
+            let endTime = Date.now();
+            let timeTaken = (endTime - startTime) / 1000;  // Convert ms to seconds
+            document.getElementById("time_taken").value = timeTaken;
+            document.getElementById("typingForm").submit();
+        }
+    </script>
+
+</body>
+</html>

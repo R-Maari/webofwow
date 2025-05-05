@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web of Wonders</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+
+    <!-- Top Navigation Bar -->
+    <nav class="bg-gray-800 shadow-lg">
+        <div class="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10">
+                <span class="text-xl font-bold text-cyan-400">Web of Wonders</span>
+            </a>
+            <ul class="flex space-x-6 text-lg">
+                <li><a href="#home" class="hover:text-cyan-400">Home</a></li>
+                <li><a href="#projects" class="hover:text-cyan-400">Explore</a></li>
+                <li><a href="#developers" class="hover:text-cyan-400">Developers</a></li>
+                <li><a href="#about" class="hover:text-cyan-400">About</a></li>
+                <li><a href="#contact" class="hover:text-cyan-400">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Welcome Section -->
+    <div class="bg-cover bg-center h-screen" style="background-image: url('{% static 'images/hero-bg.jpg' %}');">
+        <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+            <div class="text-center">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-4 animate__animated animate__fadeIn">
+                    Welcome to Web of Wonders
+                </h1>
+                <p class="text-xl sm:text-2xl text-gray-300 mb-6">
+                    Explore amazing tools and applications for developers and enthusiasts.
+                </p>
+                <a href="{% url 'register' %}">
+                    <button id="reg-btn"
+                        class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300 mb-3 sm:mb-0">
+                        Register
+                    </button>
+                </a>
+                <a href="{% url 'login' %}">
+                    <button id="log-btn"
+                        class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-gray-800 transition duration-300 ml-4">
+                        Login
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 px-8 bg-gray-800">
+        <div class="max-w-screen-lg mx-auto text-center">
+            <h2 class="text-3xl font-bold text-cyan-400 mb-6">About Us</h2>
+            <p class="text-lg text-gray-300 mb-4">
+                Web of Wonders is a platform designed for tech enthusiasts to explore a wide variety of tools, projects, and tutorials that will help them grow in their programming journey.
+            </p>
+            <p class="text-lg text-gray-300 mb-4">
+                Whether you are a developer, designer, or just a technology lover, you will find something exciting here!
+            </p>
+            <a href="#projects">
+                <button class="bg-cyan-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-cyan-600 transition duration-300">
+                    Explore Our Projects
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Tools Section (New) -->
+    <section id="projects" class="py-16 px-8 bg-gray-900">
+        <div class="max-w-screen-lg mx-auto text-center">
+            <h2 class="text-3xl font-bold text-cyan-400 mb-6">Our Tools and Applications</h2>
+            <p class="text-lg text-gray-300 mb-6">Check out some of our incredible tools designed to empower developers, designers, and technology enthusiasts.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <!-- Tool 1 -->
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:bg-gray-700 transition duration-300">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-4">PDF Converter</h3>
+                    <p class="text-gray-300 mb-4">Convert images to PDF with ease using our user-friendly tool.</p>
+                    <a href="#" class="text-cyan-500 hover:underline">Learn More</a>
+                </div>
+                <!-- Tool 2 -->
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:bg-gray-700 transition duration-300">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Code Formatter</h3>
+                    <p class="text-gray-300 mb-4">Beautify your code with our automated code formatter tool.</p>
+                    <a href="#" class="text-cyan-500 hover:underline">Learn More</a>
+                </div>
+                <!-- Tool 3 -->
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:bg-gray-700 transition duration-300">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Image Resizer</h3>
+                    <p class="text-gray-300 mb-4">Resize your images quickly and effortlessly with our tool.</p>
+                    <a href="#" class="text-cyan-500 hover:underline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-8 bg-gray-900">
+        <div class="max-w-screen-lg mx-auto text-center">
+            <h2 class="text-3xl font-bold text-cyan-400 mb-6">Get in Touch</h2>
+            <p class="text-lg text-gray-300 mb-6">Have any questions or feedback? Reach out to us!</p>
+            <a href="mailto:contact@webofwonders.com">
+                <button
+                    class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300">
+                    Contact Us
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-6">
+        <div class="text-center text-gray-400">
+            <p>&copy; 2025 Web of Wonders. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

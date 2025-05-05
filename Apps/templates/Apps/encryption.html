@@ -1,0 +1,285 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt & Decrypt</title>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            white-space: pre-wrap; /* Preserve formatting */
+        }
+        .alert {
+            display: none;
+            margin-top: 10px;
+            color: white;
+            background: green;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+    
+    
+    <meta name="csrf-token" content="{{ csrf_token }}">
+</head>
+<body>
+
+    <h2>Encrypt & Decrypt Text</h2>
+
+    <textarea id="textInput" placeholder="Enter text here"></textarea>
+    <br>
+    <input type="file" id="fileInput">
+    <br>
+    <button onclick="encryptText()">Encrypt</button>
+    <button onclick="decryptText()">Decrypt</button>
+    <button onclick="copyToClipboard()">Copy</button>
+
+    <div id="result"></div>
+    <div id="alert" class="alert">Copied to clipboard!</div>
+
+    <script>
+        // Get CSRF token from meta tag
+        function getCsrfToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        // Function to send AJAX request for encryption
+        function encryptText() {
+            let text = document.getElementById("textInput").value;
+            if (!text) {
+                alert("Please enter text to encrypt!");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: {
+                    text: text,
+                    action: "encrypt",
+                    csrfmiddlewaretoken: getCsrfToken()
+                },
+                success: function(response) {
+                    if (response.result) {
+                        document.getElementById("result").innerText = "Encrypted: " + response.result;
+                    } else {
+                        alert("Encryption failed: " + response.error);
+                    }
+                },
+                error: function(xhr) {
+                    alert("Request failed: " + xhr.responseText);
+                }
+            });
+        }
+
+        // Function to send AJAX request for decryption
+        function decryptText() {
+            let text = document.getElementById("textInput").value;
+            if (!text) {
+                alert("Please enter encrypted text to decrypt!");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: {
+                    text: text,
+                    action: "decrypt",
+                    csrfmiddlewaretoken: getCsrfToken()
+                },
+                success: function(response) {
+                    if (response.result) {
+                        document.getElementById("result").innerText = "Decrypted: " + response.result;
+                    } else {
+                        alert("Decryption failed: " + response.error);
+                    }
+                },
+                error: function(xhr) {
+                    alert("Request failed: " + xhr.responseText);
+                }
+            });
+        }
+
+        // Function to copy result to clipboard
+        function copyToClipboard() {
+            let text = document.getElementById("result").innerText.replace("Encrypted: ", "").replace("Decrypted: ", "");
+            if (!text) {
+                alert("No text to copy!");
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                let alertBox = document.getElementById("alert");
+                alertBox.style.display = "block";
+                setTimeout(() => {
+                    alertBox.style.display = "none";
+                }, 2000);
+            }).catch(err => {
+                alert("Failed to copy: " + err);
+            });
+        }
+
+        // Read uploaded file and display content in textarea
+        document.getElementById("fileInput").addEventListener("change", function() {
+            let file = this.files[0];
+            let reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById("textInput").value = reader.result;
+            };
+            reader.readAsText(file);
+        });
+    </script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt & Decrypt</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            white-space: pre-wrap;
+        }
+        .alert {
+            display: none;
+            margin-top: 10px;
+            color: white;
+            background: green;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+
+    <meta name="csrf-token" content="{{ csrf_token }}">
+</head>
+<body>
+
+    <h2>Encrypt & Decrypt Text</h2>
+
+    <textarea id="textInput" placeholder="Enter text here"></textarea>
+    <br>
+    <button onclick="encryptText()">Encrypt</button>
+    <button onclick="decryptText()">Decrypt</button>
+    <button onclick="copyToClipboard()">Copy</button>
+
+    <div id="result"></div>
+    <div id="alert" class="alert">Copied to clipboard!</div>
+
+    <script>
+        function getCsrfToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        function encryptText() {
+            let text = document.getElementById("textInput").value;
+            if (!text) {
+                alert("Please enter text to encrypt!");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: {
+                    text: text,
+                    action: "encrypt",
+                    csrfmiddlewaretoken: getCsrfToken()
+                },
+                success: function(response) {
+                    if (response.result) {
+                        document.getElementById("result").innerText = "Encrypted: " + response.result;
+                    } else {
+                        alert("Encryption failed: " + response.error);
+                    }
+                },
+                error: function(xhr) {
+                    alert("Request failed: " + xhr.responseText);
+                }
+            });
+        }
+
+        function decryptText() {
+            let text = document.getElementById("textInput").value;
+            if (!text) {
+                alert("Please enter encrypted text to decrypt!");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: {
+                    text: text,
+                    action: "decrypt",
+                    csrfmiddlewaretoken: getCsrfToken()
+                },
+                success: function(response) {
+                    if (response.result) {
+                        document.getElementById("result").innerText = "Decrypted: " + response.result;
+                    } else {
+                        alert("Decryption failed: " + response.error);
+                    }
+                },
+                error: function(xhr) {
+                    alert("Request failed: " + xhr.responseText);
+                }
+            });
+        }
+
+        function copyToClipboard() {
+            let text = document.getElementById("result").innerText.replace("Encrypted: ", "").replace("Decrypted: ", "");
+            if (!text) {
+                alert("No text to copy!");
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                let alertBox = document.getElementById("alert");
+                alertBox.style.display = "block";
+                setTimeout(() => {
+                    alertBox.style.display = "none";
+                }, 2000);
+            }).catch(err => {
+                alert("Failed to copy: " + err);
+            });
+        }
+    </script>
+
+</body>
+</html>

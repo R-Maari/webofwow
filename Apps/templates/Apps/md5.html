@@ -1,0 +1,85 @@
+  {% extends "./dashboard.html" %}
+{% comment %}
+{% block content %}
+    <h1>MD5 Hash Converter</h1>
+
+    <!-- Section to Generate MD5 Hash -->
+    <form method="post">
+        {% csrf_token %}
+        <h2>Generate MD5 Hash</h2>
+        <label for="text">Enter Text:</label>
+        <input type="text" id="text" name="text">
+        <button type="submit" name="generate_hash">Generate MD5 Hash</button>
+    </form>
+
+    {% if hash_value %}
+        <p><strong>Generated MD5 Hash:</strong> {{ hash_value }}</p>
+    {% endif %}
+
+    <hr>
+
+    <!-- Section to Reverse MD5 to Original String -->
+    <form method="post">
+        {% csrf_token %}
+        <h2>Find Original String from MD5 Hash</h2>
+        <label for="md5">Enter MD5 Hash:</label>
+        <input type="text" id="md5" name="md5">
+        <button type="submit" name="get_original">Find Original String</button>
+    </form>
+
+    {% if original_string %}
+        <p><strong>Original String:</strong> {{ original_string }}</p>
+    {% endif %}
+
+
+    {% endblock %} {% endcomment %}
+
+    {% comment %} {% extends "./dashboard.html" %} {% endcomment %}
+
+{% block content %}
+{% comment %} <div class="flex items-center justify-center w-full min-h-screen text-white px-6 py-10"> {% endcomment %}
+  <div class="bg-gray-800 bg-opacity-90 p-10 rounded-xl shadow-lg w-full mx-auto mt-20  max-w-4xl space-y-10">
+
+    <h1 class="text-3xl font-bold text-green-400 text-center">MD5 Hash Converter</h1>
+
+    <!-- Section to Generate MD5 Hash -->
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      <div>
+        <h2 class="text-xl font-semibold text-green-300">Generate MD5 Hash</h2>
+        <label for="text" class="block text-sm text-gray-400">Enter Text:</label>
+        <input type="text" id="text" name="text" class="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400" />
+      </div>
+      <button type="submit" name="generate_hash" class="w-full py-2 rounded bg-green-500 hover:bg-green-600 text-white font-semibold transition">Generate MD5 Hash</button>
+    </form>
+
+    {% if hash_value %}
+    <div class="text-green-300 mt-4">
+      <p><strong>Generated MD5 Hash:</strong></p>
+      <p class="break-all">{{ hash_value }}</p>
+    </div>
+    {% endif %}
+
+    <hr class="border-gray-600">
+
+    <!-- Section to Reverse MD5 to Original String -->
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      <div>
+        <h2 class="text-xl font-semibold text-blue-300">Find Original String from MD5 Hash</h2>
+        <label for="md5" class="block text-sm text-gray-400">Enter MD5 Hash:</label>
+        <input type="text" id="md5" name="md5" class="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+      <button type="submit" name="get_original" class="w-full py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-semibold transition">Find Original String</button>
+    </form>
+
+    {% if original_string %}
+    <div class="text-blue-300 mt-4">
+      <p><strong>Original String:</strong></p>
+      <p>{{ original_string }}</p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

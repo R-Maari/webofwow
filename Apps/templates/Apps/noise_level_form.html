@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noise Level Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Noise Level Detection</h1>
+    <p>Click "Start" to begin measuring the noise level using your microphone.</p>
+
+    <button id="startButton">Start</button>
+    <button id="stopButton" style="display: none;">Stop</button>
+
+    <div id="status">Noise Level: 0</div>
+
+    <script>
+        let audioContext;
+        let analyser;
+        let microphone;
+        let javascriptNode;
+
+        const startButton = document.getElementById("startButton");
+        const stopButton = document.getElementById("stopButton");
+        const statusDiv = document.getElementById("status");
+
+        startButton.addEventListener("click", startNoiseDetection);
+        stopButton.addEventListener("click", stopNoiseDetection);
+
+        function startNoiseDetection() {
+            startButton.style.display = "none";
+            stopButton.style.display = "inline-block";
+            statusDiv.textContent = "Listening...";
+
+            // Access the microphone using getUserMedia
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    analyser.fftSize = 256; // Size of the FFT (Fast Fourier Transform)
+
+                    microphone = audioContext.createMediaStreamSource(stream);
+                    javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+
+                    microphone.connect(analyser);
+                    analyser.connect(javascriptNode);
+                    javascriptNode.connect(audioContext.destination);
+
+                    javascriptNode.onaudioprocess = function() {
+                        // Process the audio data and get frequency information
+                        let bufferLength = analyser.frequencyBinCount;
+                        let dataArray = new Uint8Array(bufferLength);
+                        analyser.getByteFrequencyData(dataArray);
+
+                        let sum = 0;
+                        for (let i = 0; i < bufferLength; i++) {
+                            sum += dataArray[i];
+                        }
+                        let average = sum / bufferLength;
+
+                        // Display the average noise level
+                        let noiseLevel = Math.floor(average);
+                        statusDiv.textContent = "Noise Level: " + noiseLevel;
+                    };
+                })
+                .catch(function(error) {
+                    statusDiv.textContent = "Error: Could not access microphone.";
+                    console.log(error);
+                });
+        }
+
+        function stopNoiseDetection() {
+            startButton.style.display = "inline-block";
+            stopButton.style.display = "none";
+            statusDiv.textContent = "Stopped listening.";
+
+            if (microphone) {
+                microphone.disconnect();
+                javascriptNode.disconnect();
+                analyser.disconnect();
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends "./dashboard.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-10 py-10 text-center">
+    <h1 class="text-4xl font-bold text-cyan-500 mb-12">Welcome to the Timing App</h1>
+
+    <div class="flex justify-evenly mt-20"> <!-- Increased spacing here -->
+        <!-- Stopwatch Button -->
+        <button onclick="window.location.href='{% url 'stopwatch' %}'"
+                class="w-full sm:w-auto px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+            Stopwatch
+        </button>
+        
+        <!-- International Time Button -->
+        <button onclick="window.location.href='{% url 'international_time' %}'"
+                class="w-full sm:w-auto px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+            International Time
+        </button>
+
+        <!-- Timer Button -->
+        <button onclick="window.location.href='{% url 'timer' %}'"
+                class="w-full sm:w-auto px-8 py-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+            Timer
+        </button>
+    </div>
+</div>
+{% endblock %}

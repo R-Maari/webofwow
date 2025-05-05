@@ -1,0 +1,390 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Web of Wonders</title>
+    <style>
+      .scrollable-sidebar::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollable-sidebar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white">
+    <header
+      class="fixed top-0 left-0 w-full h-28 bg-gray-800 text-white flex items-center px-6 shadow-md z-10"
+    >
+      <img
+        src="{% static 'images/logo.png' %}"
+        class="h-30 w-40 cursor-pointer ml-20"
+      />
+      <div class="flex-grow flex justify-end items-center mx-4 mr-10">
+        <input
+          type="text"
+          placeholder="Search..."
+          class="px-4 py-2 rounded-md bg-gray-700 text-white w-full max-w-xs focus:outline-none"
+        />
+      </div>
+      <div class="flex space-x-10 mr-20">
+        <a href="#" class="cursor-pointer hover:text-cyan-400">Media</a>
+        <a href="#" class="cursor-pointer hover:text-cyan-400">Most Used</a>
+        <a href="#" class="cursor-pointer hover:text-cyan-400">Profile</a>
+      </div>
+    </header>
+
+    <div
+      id="hover-zone"
+      class="fixed top-28 left-0 w-2 h-[calc(100vh-7rem)] z-50"
+      onmouseenter="showSidebar()"
+    ></div>
+
+    <div class="flex pt-28 h-screen transition-all duration-500">
+      <aside
+        id="sidebar"
+        class="w-64 bg-gray-800 p-4 h-screen overflow-y-auto scrollable-sidebar transition-all duration-500"
+        onmouseleave="startHideTimer()"
+        onmouseenter="cancelHideTimer()"
+      >
+        <nav>
+          <h1 class="text-center m-10 text-3xl text-cyan-500">Tools</h1>
+          <ul class="space-y-3">
+            <li>
+              <a
+                href="{% url 'md5' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/md5/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >MD 5</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'weather' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/weather/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >Weather</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'ocr' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/ocr/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >OCR</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'nearby' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/nearby/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >Nearby</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'download_video' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/download_video/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >Video Download</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'timing' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/timing/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >Times</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'upload_file' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/upload_file/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >Pdf Maker</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'shorten_url' %}"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400 {% if request.path == '/shorten_url/' %}bg-cyan-500 text-white{% endif %}"
+                onclick="setActive(this)"
+                >URL Shorten</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block p-3 text-center rounded hover:bg-gray-700 hover:text-cyan-400"
+                onclick="setActive(this)"
+                >Item 9</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main id="main-content" class="flex-1 p-6 transition-all duration-500">
+        {% block content %}
+        <h2 class="text-2xl font-semibold text-cyan-400 mb-4">Main Content</h2>
+        <p class="text-gray-300">
+          This section adapts when the sidebar is hidden or shown. Enjoy the
+          dark theme!
+        </p>
+        {% endblock %}
+      </main>
+    </div>
+
+    <script>
+      let hideTimeout;
+
+      function hideSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.add("w-0", "p-0", "overflow-hidden");
+        sidebar.classList.remove("w-64", "p-4");
+      }
+
+      function showSidebar() {
+        clearTimeout(hideTimeout);
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.remove("w-0", "p-0", "overflow-hidden");
+        sidebar.classList.add("w-64", "p-4");
+      }
+
+      function startHideTimer() {
+        hideTimeout = setTimeout(hideSidebar, 5000);
+      }
+
+      function cancelHideTimer() {
+        clearTimeout(hideTimeout);
+      }
+
+      function setActive(link) {
+        const links = document.querySelectorAll("aside a");
+        links.forEach((link) =>
+          link.classList.remove("bg-cyan-500", "text-white")
+        );
+        link.classList.add("bg-cyan-500", "text-white");
+      }
+
+      window.onload = () => {
+        startHideTimer();
+      };
+    </script>
+  </body>
+</html>

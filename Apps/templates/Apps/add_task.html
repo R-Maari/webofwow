@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD5 Hash Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex h-screen">
+    <div class="w-1/4 bg-gray-800 p-5">
+        <h1 class="text-xl font-bold">Navigation</h1>
+        <ul class="mt-4">
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Home</a></li>
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Documents</a></li>
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Tools</a></li>
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="w-3/4 p-10">
+        <h1 class="text-3xl font-bold text-green-400">MD5 Hash Converter</h1>
+        
+        <div class="mt-10">
+            <label for="inputText" class="block mb-2">Input Text:</label>
+            <input id="inputText" type="text" class="w-full p-2 border border-gray-600 rounded focus:outline-none focus:ring focus:ring-green-500" placeholder="Enter text to hash">
+            <button id="generateHash" class="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Generate MD5 Hash</button>
+
+            <div class="mt-6">
+                <h2 class="text-lg">Generated MD5 Hash:</h2>
+                <textarea id="outputHash" class="w-full h-20 p-2 mt-2 border border-gray-600 rounded focus:outline-none" readonly placeholder="Your MD5 hash will appear here..."></textarea>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <label for="md5Hash" class="block mb-2">Input MD5 Hash:</label>
+            <input id="md5Hash" type="text" class="w-full p-2 border border-gray-600 rounded focus:outline-none focus:ring focus:ring-green-500" placeholder="Enter MD5 hash to find original text">
+            <button id="findOriginal" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Find Original Text</button>
+
+            <div class="mt-6">
+                <h2 class="text-lg">Original Text:</h2>
+                <textarea id="originalText" class="w-full h-20 p-2 mt-2 border border-gray-600 rounded focus:outline-none" readonly placeholder="The original text will appear here..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tailwind CSS JavaScript (optional for interactivity) -->
+    <script>
+        document.getElementById('generateHash').onclick = function() {
+            const inputText = document.getElementById('inputText').value;
+            // Here you would call a function to generate the MD5 hash
+            // For simplicity, we're just simulating output
+            document.getElementById('outputHash').value = "Generated MD5 Hash of: " + inputText; // Placeholder
+        };
+
+        document.getElementById('findOriginal').onclick = function() {
+            const md5Hash = document.getElementById('md5Hash').value;
+            // Here you would call a function to find the original text
+            // For simplicity, we're just simulating output
+            document.getElementById('originalText').value = "Original text for MD5: " + md5Hash; // Placeholder
+        };
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD5 Hash Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex h-screen">
+    <div class="w-1/4 bg-gray-800 p-5">
+        <h1 class="text-xl font-bold">Navigation</h1>
+        <ul class="mt-4">
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Home</a></li>
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Documents</a></li>
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Tools</a></li>
+            <li><a href="#" class="block py-2 px-3 hover:bg-gray-600">Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="w-3/4 p-10">
+        <h1 class="text-3xl font-bold text-green-400">MD5 Hash Converter</h1>
+        
+        <div class="mt-10">
+            <label for="inputText" class="block mb-2">Input Text:</label>
+            <input id="inputText" type="text" class="w-full p-2 border border-gray-600 rounded focus:outline-none focus:ring focus:ring-green-500" placeholder="Enter text to hash">
+            <button id="generateHash" class="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Generate MD5 Hash</button>
+
+            <div class="mt-6">
+                <h2 class="text-lg">Generated MD5 Hash:</h2>
+                <textarea id="outputHash" class="w-full h-20 p-2 mt-2 border border-gray-600 rounded focus:outline-none" readonly placeholder="Your MD5 hash will appear here..."></textarea>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <label for="md5Hash" class="block mb-2">Input MD5 Hash:</label>
+            <input id="md5Hash" type="text" class="w-full p-2 border border-gray-600 rounded focus:outline-none focus:ring focus:ring-green-500" placeholder="Enter MD5 hash to find original text">
+            <button id="findOriginal" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Find Original Text</button>
+
+            <div class="mt-6">
+                <h2 class="text-lg">Original Text:</h2>
+                <textarea id="originalText" class="w-full h-20 p-2 mt-2 border border-gray-600 rounded focus:outline-none" readonly placeholder="The original text will appear here..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tailwind CSS JavaScript (optional for interactivity) -->
+    <script>
+        document.getElementById('generateHash').onclick = function() {
+            const inputText = document.getElementById('inputText').value;
+            // Here you would call a function to generate the MD5 hash
+            // For simplicity, we're just simulating output
+            document.getElementById('outputHash').value = "Generated MD5 Hash of: " + inputText; // Placeholder
+        };
+
+        document.getElementById('findOriginal').onclick = function() {
+            const md5Hash = document.getElementById('md5Hash').value;
+            // Here you would call a function to find the original text
+            // For simplicity, we're just simulating output
+            document.getElementById('originalText').value = "Original text for MD5: " + md5Hash; // Placeholder
+        };
+    </script>
+</body>
+</html>

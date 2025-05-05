@@ -1,0 +1,118 @@
+{% extends "./dashboard.html" %} {% block content %}
+<div
+  class="max-w-4xl mx-auto px-6 py-10 text-center bg-gray-800 rounded-lg shadow-lg text-white"
+>
+  <h1 class="text-3xl font-bold text-green-400 mb-6">
+    Time in {{ country_name }}
+  </h1>
+
+  <div class="clock-container flex justify-center gap-10 mt-10">
+    <!-- Digital Time Display (12-hour and 24-hour) -->
+    <div class="digital-clock bg-gray-900 p-8 rounded-lg shadow-xl">
+      <h2 class="text-xl font-semibold mb-4 text-green-400">Digital Time</h2>
+      <span id="digital-time-12" class="time text-2xl font-bold"
+        >{{ digital_time_12 }}</span
+      ><br />
+      <span id="digital-time-24" class="time text-2xl font-bold"
+        >{{ digital_time_24 }}</span
+      >
+    </div>
+
+    <!-- Analog Clock Display -->
+    <div
+      class="analog-clock w-64 h-64 bg-cover rounded-full relative"
+      style="
+        background-image: url('https://www.clipartmax.com/png/middle/357-3576197_never-miss-a-moment-wall-clock-without-hands.png');
+      "
+    >
+      <div class="clock-face absolute top-0 left-0 w-full h-full">
+        <div
+          class="webofwonders-text text-xs font-bold text-gray-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+        >
+          WebOfWonders
+        </div>
+        <div
+          class="hour-hand bg-black w-1.5 h-12 absolute bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-0 origin-bottom"
+        ></div>
+        <div
+          class="minute-hand bg-gray-700 w-1.5 h-16 absolute bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-0 origin-bottom"
+        ></div>
+        <div
+          class="second-hand bg-red-500 w-1 h-20 absolute bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-0 origin-bottom"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="country-time mt-10">
+    <h3 class="text-xl font-semibold text-green-400">
+      Country Time (in {{ country_name }}'s timezone):
+    </h3>
+    <span id="country-time" class="time text-2xl font-bold"
+      >{{ country_time }}</span
+    >
+  </div>
+</div>
+
+<script>
+  // Get the timezone from Django context
+  const timezone = "{{ timezone }}";
+
+  // Function to update the digital and analog clock
+  function updateClock() {
+    const digitalTime12Element = document.getElementById("digital-time-12");
+    const digitalTime24Element = document.getElementById("digital-time-24");
+    const countryTimeElement = document.getElementById("country-time");
+
+    // Get the current date and time from the server's timezone (using the correct timezone)
+    const now = new Date().toLocaleString("en-US", { timeZone: timezone });
+
+    // Format the digital time (12-hour format with AM/PM)
+    const digitalTime12 = new Date(now).toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+
+    // Format the digital time (24-hour format)
+    const digitalTime24 = new Date(now).toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+
+    // Update the HTML with the new times
+    digitalTime12Element.textContent = digitalTime12;
+    digitalTime24Element.textContent = digitalTime24;
+    countryTimeElement.textContent = digitalTime24;
+
+    // Analog Clock Rotation
+    const hours = new Date(now).getHours();
+    const minutes = new Date(now).getMinutes();
+    const seconds = new Date(now).getSeconds();
+
+    const hourDegree = (hours % 12) * 30 + minutes / 2; // 360 / 12 = 30
+    const minuteDegree = minutes * 6; // 360 / 60 = 6
+    const secondDegree = seconds * 6; // 360 / 60 = 6
+
+    // Update analog clock hands
+    document.querySelector(
+      ".hour-hand"
+    ).style.transform = `translateX(-50%) translateY(0) rotate(${hourDegree}deg)`;
+    document.querySelector(
+      ".minute-hand"
+    ).style.transform = `translateX(-50%) translateY(0) rotate(${minuteDegree}deg)`;
+    document.querySelector(
+      ".second-hand"
+    ).style.transform = `translateX(-50%) translateY(0) rotate(${secondDegree}deg)`;
+  }
+
+  // Update the clock every 1000ms (1 second)
+  setInterval(updateClock, 1000);
+
+  // Initialize the clock immediately when the page loads
+  updateClock();
+</script>
+{% endblock %}

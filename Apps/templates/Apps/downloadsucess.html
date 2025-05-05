@@ -1,0 +1,28 @@
+{% extends "./dashboard.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-10">
+  <h1 class="text-3xl font-bold text-center text-green-400 mb-6">🎉 Download Success!</h1>
+
+  <div class="bg-gray-800 p-6 rounded-lg shadow-lg space-y-4 text-white">
+    <div>
+      <h2 class="text-2xl font-semibold text-cyan-400 mb-2">Video Details</h2>
+      <p><span class="font-semibold text-gray-300">🎬 Title:</span> {{ video_title }}</p>
+      <p><span class="font-semibold text-gray-300">⏱ Duration:</span> {{ video_duration }}</p>
+      <p><span class="font-semibold text-gray-300">📝 Description:</span> {{ video_description }}</p>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-semibold text-cyan-400 mt-6">📁 Download Path:</h3>
+      <p class="text-gray-300 break-words">{{ downloaded_file_path }}</p>
+    </div>
+
+    <!-- Button to go back to the download video page -->
+    <a href="{% url 'download_video' %}">
+      <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 mt-6">
+        Go Back to Download Video Page
+      </button>
+    </a>
+  </div>
+</div>
+{% endblock %}

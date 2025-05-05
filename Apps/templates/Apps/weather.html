@@ -1,0 +1,28 @@
+{% extends "./dashboard.html" %}
+
+{% block content %}
+    <div class="container mx-auto p-4 bg-gray-900 text-white min-h-screen mt-20 ">
+        <h1 class="text-4xl font-semibold text-center mb-6">Weather </h1>
+
+        <form method="POST" class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-xl mt-10 mx-auto">
+            {% csrf_token %}
+            <div class="mb-10">
+                <label for="city" class="block text-lg font-medium text-gray-300">Enter City:</label>
+                <input type="text" name="city" required class="w-full mt-10 px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="City Name">
+            </div>
+            <button type="submit" class="w-full py-3 bg-cyan-500 text-white rounded-lg shadow-md hover:bg-cyan-600 transition duration-300">Get Weather</button>
+        </form>
+
+        {% if weather_data %}
+            <div class="mt-8 bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-max-xl text-center mx-auto">
+                <h2 class="text-2xl font-semibold text-cyan-400 text-center mb-4">Weather in {{ weather_data.city }}</h2>
+                <p class="text-lg">Temperature: <span class="font-bold">{{ weather_data.temperature }}°C</span></p>
+                <p class="text-lg">Pressure: <span class="font-bold">{{ weather_data.pressure }} hPa</span></p>
+                <p class="text-lg">Humidity: <span class="font-bold">{{ weather_data.humidity }}%</span></p>
+                <p class="text-lg">Description: <span class="font-bold">{{ weather_data.description }}</span></p>
+            </div>
+        {% elif error_message %}
+            <p class="mt-8 text-center text-red-500 text-lg">{{ error_message }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

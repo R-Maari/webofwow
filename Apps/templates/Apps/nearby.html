@@ -1,0 +1,67 @@
+{% extends "./dashboard.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-10">
+  <h1 class="text-3xl font-bold mb-8 text-center text-cyan-400">Nearby Places</h1>
+
+  <!-- Form Section (Hidden if places are shown) -->
+  <form method="POST" id="nearbyForm" class="bg-gray-800 p-6 rounded-lg shadow-md {% if places %}hidden{% endif %}">
+    {% csrf_token %}
+    <div class="mb-4">
+      <label for="city" class="block text-sm font-medium text-gray-300 mb-1">City Name:</label>
+      <input type="text" name="city" id="city" required
+        class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+    </div>
+
+    <div class="mb-4">
+      <label for="place" class="block text-sm font-medium text-gray-300 mb-1">Place Name:</label>
+      <input type="text" name="place" id="place" required
+        class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+    </div>
+
+    <button type="submit"
+      class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+      Submit
+    </button>
+  </form>
+
+  <!-- Results Section -->
+  <div class="{% if not places %}hidden{% endif %} mt-10" id="resultSection">
+    {% if places %}
+      <!-- Find Again Button at the Top -->
+      <div class="mb-6">
+        <button onclick="toggleForm(true)"
+          class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition">
+          ← Find Again
+        </button>
+      </div>
+
+      <h3 class="text-xl font-semibold text-white mb-4">Nearby Places:</h3>
+      <ul class="space-y-6">
+        {% for place in places %}
+          <li class="bg-gray-800 p-4 rounded-md shadow">
+            <p class="text-lg font-semibold text-cyan-400">{{ place.name }}</p>
+            <p class="text-gray-300">Address: {{ place.address }}</p>
+            <a href="{{ place.google_map_link }}" target="_blank"
+              class="text-blue-400 hover:text-blue-300 underline mt-1 inline-block">View on Google Maps</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-red-400 mt-6">{{ error_message }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- JavaScript to toggle form visibility -->
+<script>
+  function toggleForm(showForm) {
+    const form = document.getElementById("nearbyForm");
+    const result = document.getElementById("resultSection");
+    if (showForm) {
+      form.classList.remove("hidden");
+      result.classList.add("hidden");
+    }
+  }
+</script>
+{% endblock %}

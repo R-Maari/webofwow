@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid #ccc;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 18px;
+            border: none;
+        }
+        input[readonly] {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+        #timer {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        #message {
+            color: red;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        #start-button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sudoku Game</h1>
+    <div id="timer">Time: 05:00</div>
+    <button id="start-button">Start Game</button>
+    <form id="sudoku-form">
+        <table>
+            {% for row in puzzle %}
+                <tr>
+                    {% for cell in row %}
+                        <td>
+                            {% if cell == 0 %}
+                                <input type="number" min="1" max="9">
+                            {% else %}
+                                <input type="number" value="{{ cell }}" readonly>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <button type="submit" disabled>Submit</button>
+    </form>
+    <div id="message"></div>
+
+    <script>
+        const solution = {{ solution|safe }}; // Solution passed from the server
+        const timerElement = document.getElementById("timer");
+        const messageElement = document.getElementById("message");
+        const form = document.getElementById("sudoku-form");
+        const startButton = document.getElementById("start-button");
+        const submitButton = form.querySelector("button[type='submit']");
+
+        let timerInterval;
+        let timeRemaining = 5 * 60; // 5 minutes in seconds
+
+        // Format time as MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // Start the timer
+        function startTimer() {
+            timerElement.textContent = `Time: ${formatTime(timeRemaining)}`;
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                timerElement.textContent = `Time: ${formatTime(timeRemaining)}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    messageElement.textContent = "Time's up! Game over.";
+                    disableInputs();
+                }
+            }, 1000);
+        }
+
+        // Disable all inputs
+        function disableInputs() {
+            form.querySelectorAll("input").forEach(input => input.disabled = true);
+            submitButton.disabled = true; // Disable the submit button
+        }
+
+        // Validate the user's solution
+        function validateSolution() {
+            const inputs = Array.from(form.querySelectorAll("input"));
+            let isCorrect = true;
+
+            inputs.forEach((input, index) => {
+                const value = parseInt(input.value, 10); // Treat empty as invalid
+                const row = Math.floor(index / 9);
+                const col = index % 9;
+
+                if (isNaN(value) || value < 1 || value > 9 || value !== solution[row][col]) {
+                    isCorrect = false;
+                }
+            });
+
+            return isCorrect;
+        }
+
+        // Check if there are empty boxes
+        function hasEmptyBoxes() {
+            const inputs = Array.from(form.querySelectorAll("input"));
+            return inputs.some(input => input.value.trim() === "");
+        }
+
+        // Handle form submission
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent form from reloading the page
+
+            // Stop the timer on submission
+            clearInterval(timerInterval);
+
+            if (timeRemaining <= 0) {
+                messageElement.textContent = "Time's up! Game over.";
+                return;
+            }
+
+            if (hasEmptyBoxes()) {
+                messageElement.textContent = "Please fill in all the boxes before submitting.";
+                return;
+            }
+
+            const isCorrect = validateSolution();
+
+            if (isCorrect) {
+                messageElement.textContent = "Congratulations! Your solution is correct!";
+                messageElement.style.color = "green";
+                disableInputs();
+            } else {
+                messageElement.textContent = "Your solution is incorrect! Here is the correct solution.";
+                displaySolution();
+            }
+        });
+
+        // Display the correct solution
+        function displaySolution() {
+            const table = document.querySelector("table");
+            solution.forEach((row, rIndex) => {
+                row.forEach((cell, cIndex) => {
+                    const input = table.rows[rIndex].cells[cIndex].querySelector("input");
+                    input.value = cell;
+                    input.disabled = true; // Disable further editing
+                });
+            });
+        }
+
+        // Start game and timer on button click
+        startButton.addEventListener("click", () => {
+            startButton.disabled = true; // Disable the start button
+            submitButton.disabled = false; // Enable the submit button
+            startTimer();
+        });
+    </script>
+</body>
+</html>

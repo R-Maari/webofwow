@@ -1,0 +1,168 @@
+{% extends "./dashboard.html" %}
+
+
+{% block content %}
+<div class="max-w-xl mx-auto px-6 py-10 text-center bg-gray-800 rounded-lg shadow-lg mt-20">
+    <h1 class="text-3xl font-bold text-white mb-6">Set Timer</h1>
+
+    <!-- Timer Controls -->
+    <div class="space-y-6 mb-6 mt-5">
+        <div class="flex justify-center space-x-4">
+            <div>
+                <label for="hours" class="text-white">Hours:</label>
+                <select id="hours" class="mt-2 p-2 rounded-lg text-gray-700">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="minutes" class="text-white">Minutes:</label>
+                <select id="minutes" class="mt-2 p-2 rounded-lg text-gray-700">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="seconds" class="text-white">Seconds:</label>
+                <select id="seconds" class="mt-2 p-2 rounded-lg text-gray-700">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Start Timer Button -->
+        <button id="start-timer" class="w-full sm:w-auto px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105">
+            Start Timer
+        </button>
+    </div>
+
+    <!-- Timer Display -->
+    <h2 id="time-display" class="text-4xl font-mono text-white mb-6">
+        00:00:00
+    </h2>
+</div>
+
+<script>
+    // Timer function
+    function startTimer(hours, minutes, seconds) {
+        let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        const display = document.getElementById("time-display");
+
+        // Hide notification if there was one previously
+        const existingOverlay = document.querySelector('div[style*="z-index: 9999"]');
+        if (existingOverlay) existingOverlay.remove();
+
+        let timerInterval = setInterval(function () {
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                playSound();
+            } else {
+                totalSeconds--;
+                let hrs = Math.floor(totalSeconds / 3600);
+                let mins = Math.floor((totalSeconds % 3600) / 60);
+                let secs = totalSeconds % 60;
+
+                // Update the display with the remaining time
+                display.textContent = `${formatTime(hrs)}:${formatTime(mins)}:${formatTime(secs)}`;
+            }
+        }, 1000);
+    }
+
+    // Function to format time with leading zero if needed
+    function formatTime(time) {
+        return time < 10 ? '0' + time : time;
+    }
+
+    // Play sound when the timer ends and show notification
+    function playSound() {
+        const audio = new Audio('/static/audio/timer.mp3'); // Path to your audio file
+        audio.play();
+
+        // Check if notifications are permitted
+        if ("Notification" in window && Notification.permission === "granted") {
+            new Notification("⏰ Timer Done!", {
+                body: "Your countdown is completed.",
+                icon: "/static/images/logo.png" 
+                
+            });
+        } else {
+            console.log("Notification permission not granted.");
+        }
+
+        // Show a custom notification on screen (Toast-style)
+        showNotification();
+    }
+
+    // Function to display a toast notification on the screen (bottom-right)
+    function showNotification() {
+        const notification = document.createElement('div');
+        notification.textContent = '⏰ Time is up!';
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.right = '20px';
+        notification.style.backgroundColor = '#1f2937'; // Tailwind gray-800
+        notification.style.color = 'white';
+        notification.style.padding = '10px 20px';
+        notification.style.fontSize = '1.2rem';
+        notification.style.borderRadius = '8px';
+        notification.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3)';
+        notification.style.zIndex = '9999';
+        notification.style.display = 'flex';
+        notification.style.alignItems = 'center';
+        notification.style.cursor = 'pointer';
+
+        // Close notification when clicked
+        notification.addEventListener('click', function () {
+            notification.style.display = 'none';
+        });
+
+        // Add the notification to the body
+        document.body.appendChild(notification);
+
+        // Auto-hide after 5 seconds
+        setTimeout(function () {
+            notification.style.display = 'none';
+        }, 5000);
+    }
+
+    // Button click handler
+    document.getElementById('start-timer').addEventListener('click', function () {
+        const hours = parseInt(document.getElementById('hours').value) || 0;
+        const minutes = parseInt(document.getElementById('minutes').value) || 0;
+        const seconds = parseInt(document.getElementById('seconds').value) || 0;
+        startTimer(hours, minutes, seconds);
+    });
+
+    // Ask for permission on page load (for notifications)
+    document.addEventListener("DOMContentLoaded", function () {
+        if ("Notification" in window && Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+    });
+</script>
+{% endblock %}

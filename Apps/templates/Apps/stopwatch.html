@@ -1,0 +1,83 @@
+{% extends "./dashboard.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-10 text-center">
+    <h1 class="text-4xl font-bold text-cyan-500 mt-20 mb-6 animate__animated animate__fadeIn">Stopwatch</h1>
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div id="timeDisplay" class="text-5xl font-mono text-white mb-6">
+            00:00:00.000
+        </div>
+
+        <div class="space-x-4">
+            <button id="startStop" onclick="startStop()" 
+                    class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105">
+                Start
+            </button>
+            <button id="reset" onclick="reset()" 
+                    class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105">
+                Reset
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let timer;
+    let seconds = 0;
+    let minutes = 0;
+    let hours = 0;
+    let milliseconds = 0;
+    let running = false;
+
+    function startStop() {
+        if (running) {
+            clearInterval(timer);
+            document.getElementById('startStop').textContent = 'Start';
+        } else {
+            timer = setInterval(updateTime, 10); // Update every 10ms
+            document.getElementById('startStop').textContent = 'Stop';
+        }
+        running = !running;
+    }
+
+    function updateTime() {
+        milliseconds++;
+        if (milliseconds >= 100) {
+            milliseconds = 0;
+            seconds++;
+        }
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+        }
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+
+        const timeDisplay = document.getElementById('timeDisplay');
+        timeDisplay.textContent = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds) + "." + formatMilliseconds(milliseconds);
+    }
+
+    function formatTime(time) {
+        return time < 10 ? '0' + time : time;
+    }
+
+    function formatMilliseconds(ms) {
+        return ms < 10 ? '00' + ms : ms < 100 ? '0' + ms : ms;
+    }
+
+    function reset() {
+        clearInterval(timer);
+        running = false;
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+        milliseconds = 0;
+        document.getElementById('timeDisplay').textContent = '00:00:00.000';
+        document.getElementById('startStop').textContent = 'Start';
+    }
+</script>
+
+{% endblock %}
