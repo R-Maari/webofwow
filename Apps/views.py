@@ -671,50 +671,50 @@ def convert_images_to_pdf(image_paths):
 
 
 
-def music(request):
-    """
-    Render the initial form for MP4 to MP3 conversion.
-    """
-    return render(request, 'Apps/mp4tomp3.html')
+# def music(request):
+#     """
+#     Render the initial form for MP4 to MP3 conversion.
+#     """
+#     return render(request, 'Apps/mp4tomp3.html')
 
-def convert(request):
-    """
-    Handle MP4 to MP3 file conversion.
-    """
-    if request.method == 'POST':
-        uploaded_file = request.FILES.get('mp4_file')  # Get the uploaded MP4 file
+# def convert(request):
+#     """
+#     Handle MP4 to MP3 file conversion.
+#     """
+#     if request.method == 'POST':
+#         uploaded_file = request.FILES.get('mp4_file')  # Get the uploaded MP4 file
 
-        if uploaded_file:
-            # Save the uploaded MP4 file to the media directory
-            input_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
-            with open(input_path, 'wb') as f:
-                for chunk in uploaded_file.chunks():
-                    f.write(chunk)
+#         if uploaded_file:
+#             # Save the uploaded MP4 file to the media directory
+#             input_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
+#             with open(input_path, 'wb') as f:
+#                 for chunk in uploaded_file.chunks():
+#                     f.write(chunk)
 
-            # Define the output MP3 file path
-            output_filename = f"{os.path.splitext(uploaded_file.name)[0]}  _WOW.mp3"
-            output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
+#             # Define the output MP3 file path
+#             output_filename = f"{os.path.splitext(uploaded_file.name)[0]}  _WOW.mp3"
+#             output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
 
-            try:
-                # Convert MP4 to MP3 using pydub
-                audio = AudioSegment.from_file(input_path, format="mp4")
-                audio.export(output_path, format="mp3")
-            except Exception as e:
-                # Handle errors during conversion
-                return HttpResponse(f"Error during conversion: {e}", status=500)
+#             try:
+#                 # Convert MP4 to MP3 using pydub
+#                 audio = AudioSegment.from_file(input_path, format="mp4")
+#                 audio.export(output_path, format="mp3")
+#             except Exception as e:
+#                 # Handle errors during conversion
+#                 return HttpResponse(f"Error during conversion: {e}", status=500)
 
-            # Serve the MP3 file as a downloadable response
-            with open(output_path, 'rb') as mp3_file:
-                response = HttpResponse(mp3_file.read(), content_type='audio/mpeg')
-                response['Content-Disposition'] = f'attachment; filename="{output_filename}"'
-                return response
+#             # Serve the MP3 file as a downloadable response
+#             with open(output_path, 'rb') as mp3_file:
+#                 response = HttpResponse(mp3_file.read(), content_type='audio/mpeg')
+#                 response['Content-Disposition'] = f'attachment; filename="{output_filename}"'
+#                 return response
 
-        else:
-            # Handle case when no file is uploaded
-            return HttpResponse("No file was uploaded.", status=400)
+#         else:
+#             # Handle case when no file is uploaded
+#             return HttpResponse("No file was uploaded.", status=400)
 
-    # Render the form if the request method is not POST
-    return render(request, 'Apps/mp4tomp3.html')
+#     # Render the form if the request method is not POST
+#     return render(request, 'Apps/mp4tomp3.html')
     
 # tick tac 
 def tick_tac(request):
