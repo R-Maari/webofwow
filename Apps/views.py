@@ -59,28 +59,24 @@ def dashboard(request):
 
 from pymongo import MongoClient
 
-<<<<<<< HEAD
+
 client = MongoClient("mongodb+srv://rmariatai57:rstkm684@cluster0.upaqeve.mongodb.net/")
 db = client['webofwonders']  
 user_collection = db['user'] 
 otp_collection = db['OTP']   
-=======
-# client = MongoClient("mongodb+srv://rmariatai57:CEowYbCGnISoDCFw@cluster0.upaqeve.mongodb.net/")
-# db = client['webofwonders']  
-# user_collection = db['user'] 
+
+
+
+
+
+
+
+
+
+# client = MongoClient('localhost', 27017) 
+# db = client['webofwonders']
+# user_collection = db['User']  
 # otp_collection = db['OTP']   
->>>>>>> fb948636dd8e8184172174f953190ed0135621f2
-
-
-
-
-
-
-
-client = MongoClient('localhost', 27017) 
-db = client['webofwonders']
-user_collection = db['User']  
-otp_collection = db['OTP']   
 
 otp_storage = {}  
 
