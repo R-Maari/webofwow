@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-6e3)js5!g(5)iwzgy&8g@951)qt)ieyh2=cjga%*lc(i#m71y_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://webofwonders-apvu.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://webofwonders-t4rw.onrender.com']
 
 
 # Application definition
